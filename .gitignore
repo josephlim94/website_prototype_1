@@ -3,3 +3,6 @@
 
 # Django database
 db.*
+
+# vscode
+.vscode*
