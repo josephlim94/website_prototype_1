@@ -3,6 +3,7 @@
 
 # Django database
 db.*
+*migrations*
 
 # vscode
 .vscode*
