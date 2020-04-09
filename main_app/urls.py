@@ -19,4 +19,5 @@ urlpatterns = [
     path('user_login/', views.user_login, name='user_login'),
     path('user_logout/', views.user_logout, name='user_logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
+    path('listing_application_view/<int:listing_id>/', views.listing_application_view, name='listing_application_view'),
 ]

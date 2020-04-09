@@ -7,7 +7,7 @@
   {% if listing_data_list %}
   <ul>
     {% for listing_data in listing_data_list %}
-    <li><a href="#">{{ listing_data.item_of_interest }}</a></li>
+    <li><a href="/main_app/listing_application_view/{{ listing_data.id }}/">{{ listing_data.item_of_interest }}</a></li>
     {% endfor %}
   </ul>
   {% else %}

@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect, HttpResponse
+
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.urls import reverse
 from django.template import loader
 from django.contrib.auth import login, logout, authenticate
@@ -69,3 +69,11 @@ def user_login(request):
         return render(request, 'main_app/login.html', {'form': form})
     else:
         return redirect('main_app:dashboard')
+
+@login_required
+def listing_application_view(request, listing_id):
+    try:
+        listing_detail = ListingData.objects.get(pk=listing_id)
+    except ListingData.DoesNotExist:
+        raise Http404("Listing does not exist")
+    return render(request, 'main_app/listing_application.html', {'listing_detail': listing_detail})
