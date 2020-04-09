@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
+from .models import ListingData
 
 def index(request):
     template = loader.get_template('main_app/index.html')
@@ -26,7 +27,8 @@ def vote(request, question_id):
 
 @login_required
 def dashboard(request):
-    return render(request, 'main_app/dashboard.html', {})
+    listing_data_list = ListingData.objects.all()
+    return render(request, 'main_app/dashboard.html', {'listing_data_list':listing_data_list})
 
 def user_logout(request):
     logout(request)
