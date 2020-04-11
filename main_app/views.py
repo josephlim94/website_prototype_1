@@ -71,13 +71,14 @@ def user_login(request):
         return redirect('main_app:dashboard')
 
 from django.contrib.auth.models import User
+
 @login_required
 def listing_application_view(request, listing_id):
     try:
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
         raise Http404("Listing does not exist")
-    user_list = User.objects.all()
+    user_list = listing_detail.current_users.all()
     return render(request, 'main_app/listing_application.html', {'listing_detail': listing_detail, 'user_list': user_list})
 
 from .serializers import ListingDataSerializer, GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
