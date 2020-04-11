@@ -70,10 +70,57 @@ def user_login(request):
     else:
         return redirect('main_app:dashboard')
 
+from django.contrib.auth.models import User
 @login_required
 def listing_application_view(request, listing_id):
     try:
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
         raise Http404("Listing does not exist")
-    return render(request, 'main_app/listing_application.html', {'listing_detail': listing_detail})
+    user_list = User.objects.all()
+    return render(request, 'main_app/listing_application.html', {'listing_detail': listing_detail, 'user_list': user_list})
+
+from .serializers import ListingDataSerializer, GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
+from rest_framework import generics
+from .models import GeneralTable, DateTable, TimeTable, PriceTable
+
+
+class ListingDataList(generics.ListCreateAPIView):
+    queryset = ListingData.objects.all()
+    serializer_class = ListingDataSerializer
+
+class ListingDataDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ListingData.objects.all()
+    serializer_class = ListingDataSerializer
+
+class GeneralTableList(generics.ListCreateAPIView):
+    queryset = GeneralTable.objects.all()
+    serializer_class = GeneralTableSerializer
+
+class GeneralTableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = GeneralTable.objects.all()
+    serializer_class = GeneralTableSerializer
+
+class DateTableList(generics.ListCreateAPIView):
+    queryset = DateTable.objects.all()
+    serializer_class = DateTableSerializer
+
+class DateTableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DateTable.objects.all()
+    serializer_class = DateTableSerializer
+
+class TimeTableList(generics.ListCreateAPIView):
+    queryset = TimeTable.objects.all()
+    serializer_class = TimeTableSerializer
+
+class TimeTableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TimeTable.objects.all()
+    serializer_class = TimeTableSerializer
+
+class PriceTableList(generics.ListCreateAPIView):
+    queryset = PriceTable.objects.all()
+    serializer_class = PriceTableSerializer
+
+class PriceTableDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PriceTable.objects.all()
+    serializer_class = PriceTableSerializer

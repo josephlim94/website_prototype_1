@@ -7,6 +7,24 @@
   <p>{{ listing_detail.item_of_interest }}</p>
   <p>{{ listing_detail.price }}</p>
   <p>{{ listing_detail.proposed_date }}</p>
+  <p>Author: {{ listing_detail.created_by.username }}</p>
+  <p>List of users</p>
+  {% if user_list %}
+  <ul>
+    {% for user in user_list %}
+    <li>
+      <div>
+        <p>ID: <a href="#">{{ user.id }}</a></p>
+        <p>Username: {{ user.username }}</p>
+        <p>First name: {{ user.first_name }}</p>
+        <p>E-mail: {{ user.email }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No users are available.</p>
+  {% endif %}
 </div>
 
 {% endblock %}

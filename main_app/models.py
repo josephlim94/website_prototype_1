@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User, Group
 
 # Create your models here.
 class Question(models.Model):
@@ -15,8 +16,13 @@ class ListingData(models.Model):
     item_of_interest = models.CharField(max_length=200)
     price = models.FloatField(default=0)
     proposed_date = models.DateTimeField('proposed date')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.item_of_interest
+
+class ListingUserGroup(models.Model):
+    created_by = models.ForeignKey(ListingData, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class GeneralTable(models.Model):
     listing_foreign_key = models.ForeignKey(ListingData, on_delete=models.CASCADE)
