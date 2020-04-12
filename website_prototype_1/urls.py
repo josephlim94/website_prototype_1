@@ -26,6 +26,8 @@ router = routers.DefaultRouter()
 router.register(r'users', quickstart_views.UserViewSet)
 router.register(r'groups', quickstart_views.GroupViewSet)
 
+from organizations.backends import invitation_backend
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 
@@ -35,4 +37,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('snippets/', include('snippets.urls')),
+    url(r'^accounts/', include('organizations.urls')),
+    url(r'^invitations/', include(invitation_backend().get_urls())),
 ]

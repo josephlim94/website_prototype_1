@@ -5,6 +5,8 @@ from django.contrib.auth import views as auth_views
 
 from . import views
 
+from organizations.views import OrganizationCreate
+
 app_name = 'main_app'
 urlpatterns = [
     # ex: /main_app/
@@ -30,4 +32,5 @@ urlpatterns = [
     path('time_table/<int:pk>/', views.TimeTableDetail.as_view()),
     path('price_table/', views.PriceTableList.as_view(), name='price_table'),
     path('price_table/<int:pk>/', views.PriceTableDetail.as_view()),
+    path('organization_create/', OrganizationCreate.as_view(), name='organization_create'),
 ]
