@@ -71,6 +71,7 @@ def user_login(request):
         return redirect('main_app:dashboard')
 
 from django.contrib.auth.models import User
+from .models import GeneralTable, DateTable, TimeTable, PriceTable
 
 @login_required
 def listing_application_view(request, listing_id):
@@ -78,8 +79,28 @@ def listing_application_view(request, listing_id):
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
         raise Http404("Listing does not exist")
-    user_list = listing_detail.current_users.all()
-    return render(request, 'main_app/listing_application.html', {'listing_detail': listing_detail, 'user_list': user_list})
+    try:
+        listing_general_data = GeneralTable.objects.get(listing_foreign_key=listing_detail)
+    except GeneralTable.DoesNotExist:
+        listing_general_data = {}
+    try:
+        listing_date_data = DateTable.objects.get(listing_foreign_key=listing_detail)
+    except DateTable.DoesNotExist:
+        listing_date_data = {}
+    try:
+        listing_time_data = TimeTable.objects.get(listing_foreign_key=listing_detail)
+    except TimeTable.DoesNotExist:
+        listing_time_data = {}
+    try:
+        listing_price_data = PriceTable.objects.get(listing_foreign_key=listing_detail)
+    except PriceTable.DoesNotExist:
+        listing_price_data = {}
+    context = {'listing_detail': listing_detail,
+    'listing_general_data': listing_general_data,
+    'listing_date_data': listing_date_data,
+    'listing_time_data': listing_time_data,
+    'listing_price_data': listing_price_data,}
+    return render(request, 'main_app/listing_application.html', context=context)
 
 from .serializers import ListingDataSerializer, GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
 from rest_framework import generics

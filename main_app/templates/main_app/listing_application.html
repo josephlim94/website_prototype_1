@@ -7,11 +7,13 @@
   <p>{{ listing_detail.item_of_interest }}</p>
   <p>{{ listing_detail.price }}</p>
   <p>{{ listing_detail.proposed_date }}</p>
+
   <p>Author: {{ listing_detail.created_by.username }}</p>
+
   <p>List of users</p>
-  {% if user_list %}
+  {% if listing_detail.current_users.all %}
   <ul>
-    {% for user in user_list %}
+    {% for user in listing_detail.current_users.all %}
     <li>
       <div>
         <p>ID: <a href="#">{{ user.id }}</a></p>
@@ -25,6 +27,39 @@
   {% else %}
   <p>No user in here yet.</p>
   {% endif %}
+
+  <p>General Data</p>
+  <ul>
+    {% for data in listing_general_data %}
+    <li>
+      {{ data.description }}
+    </li>
+    {% endfor %}
+  </ul>
+  <p>Date Data</p>
+  <ul>
+    {% for data in listing_date_data %}
+    <li>
+      {{ data.description }}
+    </li>
+    {% endfor %}
+  </ul>
+  <p>Time Data</p>
+  <ul>
+    {% for data in listing_time_data %}
+    <li>
+      {{ data.description }}
+    </li>
+    {% endfor %}
+  </ul>
+  <p>Price Data</p>
+  <ul>
+    {% for data in listing_price_data %}
+    <li>
+      {{ data.description }}
+    </li>
+    {% endfor %}
+  </ul>
 </div>
 
 {% endblock %}
