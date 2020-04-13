@@ -31,4 +31,6 @@ urlpatterns = [
     # Others
     path('organization_create/', OrganizationCreate.as_view(), name='organization_create'),
     path('add_into_general_table/', views.add_into_general_table, name='add_into_general_table'),
+    path('<int:general_data_id>/read_or_update_in_general_table/', views.read_or_update_in_general_table, name='read_or_update_in_general_table'),
+    path('<int:general_data_id>/delete_in_general_table/', views.delete_in_general_table, name='delete_in_general_table'),
 ]

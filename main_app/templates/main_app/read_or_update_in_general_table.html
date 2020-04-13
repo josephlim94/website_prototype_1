@@ -1,0 +1,15 @@
+{% extends 'main_app/base.html' %}
+
+{% block content %}
+<h1 class="cover-heading">General Data</h1>
+
+<div style="text-align:left">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <a class="btn btn-danger" href="{% url 'main_app:delete_in_general_table' data.id %}">Delete</a>
+</div>
+
+{% endblock %}

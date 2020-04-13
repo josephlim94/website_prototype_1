@@ -88,34 +88,32 @@ def add_into_general_table(request):
         form = GeneralTableForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('main_app:listing_application_view', args=(1,)))
+            return HttpResponseRedirect(reverse('main_app:dashboard'))
     else:
         form = GeneralTableForm()
 
     return render(request, 'main_app/add_into_general_table.html', {'form':form})
 
 @login_required
-def update_book(request, book_id):
-    book_id = int(book_id)
+def read_or_update_in_general_table(request, general_data_id):
     try:
-        book_sel = Book.objects.get(id = book_id)
-    except Book.DoesNotExist:
-        return redirect('index')
-    book_form = BookCreate(request.POST or None, instance = book_sel)
-    if book_form.is_valid():
-       book_form.save()
-       return redirect('index')
-    return render(request, 'book/upload_form.html', {'upload_form':book_form})
+        general_data = GeneralTable.objects.get(pk=general_data_id)
+    except GeneralTable.DoesNotExist:
+        return redirect('main_app:dashboard')
+    form = GeneralTableForm(request.POST or None, instance = general_data)
+    if form.is_valid():
+       form.save()
+       return redirect('main_app:dashboard')
+    return render(request, 'main_app/read_or_update_in_general_table.html', {'form':form, 'data': general_data})
 
 @login_required
-def delete_book(request, book_id):
-    book_id = int(book_id)
+def delete_in_general_table(request, general_data_id):
     try:
-        book_sel = Book.objects.get(id = book_id)
-    except Book.DoesNotExist:
-        return redirect('index')
-    book_sel.delete()
-    return redirect('index')
+        general_data = GeneralTable.objects.get(pk=general_data_id)
+    except GeneralTable.DoesNotExist:
+        return redirect('main_app:dashboard')
+    general_data.delete()
+    return redirect('main_app:dashboard')
 
 from .serializers import ListingDataSerializer, ListingUserGroupSerializer
 from .serializers import GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
