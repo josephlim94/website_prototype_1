@@ -33,4 +33,5 @@ urlpatterns = [
     path('price_table/', views.PriceTableList.as_view(), name='price_table'),
     path('price_table/<int:pk>/', views.PriceTableDetail.as_view()),
     path('organization_create/', OrganizationCreate.as_view(), name='organization_create'),
+    path('add_into_general_table/', views.add_into_general_table, name='add_into_general_table'),
 ]

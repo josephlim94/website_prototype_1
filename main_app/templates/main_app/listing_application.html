@@ -12,7 +12,7 @@
 
   <p>List of users</p>
   {% if listing_detail.current_users.all %}
-  <ul>
+  <ol>
     {% for user in listing_detail.current_users.all %}
     <li>
       <div>
@@ -23,7 +23,7 @@
       </div>
     </li>
     {% endfor %}
-  </ul>
+  </ol>
   {% else %}
   <p>No user in here yet.</p>
   {% endif %}
@@ -36,6 +36,9 @@
     </li>
     {% endfor %}
   </ul>
+  <p class="lead">
+    <a href="{% url 'main_app:add_into_general_table' %}" class="btn btn-lg btn-secondary">Add General Data</a>
+  </p>
   <p>Date Data</p>
   <ul>
     {% for data in listing_date_data %}

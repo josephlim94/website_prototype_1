@@ -1,0 +1,14 @@
+{% extends 'main_app/base.html' %}
+
+{% block content %}
+<h1 class="cover-heading">Add Into General Table</h1>
+
+<div style="text-align:left">
+    <form action="{% url 'main_app:add_into_general_table' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock %}

@@ -79,28 +79,56 @@ def listing_application_view(request, listing_id):
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
         raise Http404("Listing does not exist")
-    try:
-        listing_general_data = GeneralTable.objects.get(listing_foreign_key=listing_detail)
-    except GeneralTable.DoesNotExist:
-        listing_general_data = {}
-    try:
-        listing_date_data = DateTable.objects.get(listing_foreign_key=listing_detail)
-    except DateTable.DoesNotExist:
-        listing_date_data = {}
-    try:
-        listing_time_data = TimeTable.objects.get(listing_foreign_key=listing_detail)
-    except TimeTable.DoesNotExist:
-        listing_time_data = {}
-    try:
-        listing_price_data = PriceTable.objects.get(listing_foreign_key=listing_detail)
-    except PriceTable.DoesNotExist:
-        listing_price_data = {}
+
+    listing_general_data = GeneralTable.objects.filter(listing_foreign_key=listing_detail)
+    listing_date_data = DateTable.objects.filter(listing_foreign_key=listing_detail)
+    listing_time_data = TimeTable.objects.filter(listing_foreign_key=listing_detail)
+    listing_price_data = PriceTable.objects.filter(listing_foreign_key=listing_detail)
+
     context = {'listing_detail': listing_detail,
     'listing_general_data': listing_general_data,
     'listing_date_data': listing_date_data,
     'listing_time_data': listing_time_data,
     'listing_price_data': listing_price_data,}
     return render(request, 'main_app/listing_application.html', context=context)
+
+from .forms import GeneralTableForm
+from .models import GeneralTable
+
+@login_required
+def add_into_general_table(request):
+    if request.method == 'POST':
+        form = GeneralTableForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main_app:listing_application_view', args=(1,)))
+    else:
+        form = GeneralTableForm()
+
+    return render(request, 'main_app/add_into_general_table.html', {'form':form})
+
+@login_required
+def update_book(request, book_id):
+    book_id = int(book_id)
+    try:
+        book_sel = Book.objects.get(id = book_id)
+    except Book.DoesNotExist:
+        return redirect('index')
+    book_form = BookCreate(request.POST or None, instance = book_sel)
+    if book_form.is_valid():
+       book_form.save()
+       return redirect('index')
+    return render(request, 'book/upload_form.html', {'upload_form':book_form})
+
+@login_required
+def delete_book(request, book_id):
+    book_id = int(book_id)
+    try:
+        book_sel = Book.objects.get(id = book_id)
+    except Book.DoesNotExist:
+        return redirect('index')
+    book_sel.delete()
+    return redirect('index')
 
 from .serializers import ListingDataSerializer, GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
 from rest_framework import generics
