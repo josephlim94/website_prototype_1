@@ -10,10 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .models import ListingData
 
 def index(request):
-    template = loader.get_template('main_app/index.html')
-    context = {
-    }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'main_app/index.html', {})
 
 @login_required
 def dashboard(request):
