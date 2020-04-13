@@ -117,8 +117,10 @@ def delete_book(request, book_id):
     book_sel.delete()
     return redirect('index')
 
-from .serializers import ListingDataSerializer, GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
+from .serializers import ListingDataSerializer, ListingUserGroupSerializer
+from .serializers import GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
 from rest_framework import generics
+from .models import ListingUserGroup
 from .models import GeneralTable, DateTable, TimeTable, PriceTable
 
 
@@ -129,6 +131,14 @@ class ListingDataList(generics.ListCreateAPIView):
 class ListingDataDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ListingData.objects.all()
     serializer_class = ListingDataSerializer
+
+class ListingUserGroupList(generics.ListCreateAPIView):
+    queryset = ListingUserGroup.objects.all()
+    serializer_class = ListingUserGroupSerializer
+
+class ListingUserGroupDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ListingUserGroup.objects.all()
+    serializer_class = ListingUserGroupSerializer
 
 class GeneralTableList(generics.ListCreateAPIView):
     queryset = GeneralTable.objects.all()

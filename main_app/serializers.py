@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from .models import ListingData, GeneralTable, DateTable, TimeTable, PriceTable
+from .models import ListingData, ListingUserGroup, GeneralTable, DateTable, TimeTable, PriceTable
 
 class ListingDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingData
         fields = ['id', 'item_of_interest', 'price', 'proposed_date']
+
+class ListingUserGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ListingUserGroup
+        fields = "__all__"
 
 class GeneralTableSerializer(serializers.ModelSerializer):
     class Meta:

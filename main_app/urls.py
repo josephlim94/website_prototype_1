@@ -15,8 +15,11 @@ urlpatterns = [
     path('user_logout/', views.user_logout, name='user_logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
     path('listing_application_view/<int:listing_id>/', views.listing_application_view, name='listing_application_view'),
+    # REST API
     path('listing_data/', views.ListingDataList.as_view(), name='listing_data'),
     path('listing_data/<int:pk>/', views.ListingDataDetail.as_view()),
+    path('listing_user_group/', views.ListingUserGroupList.as_view(), name='listing_user_group'),
+    path('listing_user_group/<int:pk>/', views.ListingUserGroupDetail.as_view()),
     path('general_table/', views.GeneralTableList.as_view(), name='general_table'),
     path('general_table/<int:pk>/', views.GeneralTableDetail.as_view()),
     path('date_table/', views.DateTableList.as_view(), name='date_table'),
@@ -25,6 +28,7 @@ urlpatterns = [
     path('time_table/<int:pk>/', views.TimeTableDetail.as_view()),
     path('price_table/', views.PriceTableList.as_view(), name='price_table'),
     path('price_table/<int:pk>/', views.PriceTableDetail.as_view()),
+    # Others
     path('organization_create/', OrganizationCreate.as_view(), name='organization_create'),
     path('add_into_general_table/', views.add_into_general_table, name='add_into_general_table'),
 ]
