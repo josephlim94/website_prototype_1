@@ -69,6 +69,7 @@ def listing_application_view(request, listing_id):
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
         raise Http404("Listing does not exist")
+    request.session['current_listing_id'] = listing_id
 
     listing_general_data = GeneralTable.objects.filter(listing_foreign_key=listing_detail)
     listing_date_data = DateTable.objects.filter(listing_foreign_key=listing_detail)
@@ -91,7 +92,7 @@ def add_into_general_table(request):
         form = GeneralTableForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('main_app:dashboard'))
+            return HttpResponseRedirect(reverse('main_app:listing_application_view', kwargs={'listing_id': request.session['current_listing_id']}))
     else:
         form = GeneralTableForm()
 
@@ -106,7 +107,7 @@ def read_or_update_in_general_table(request, general_data_id):
     form = GeneralTableForm(request.POST or None, instance = general_data)
     if form.is_valid():
        form.save()
-       return redirect('main_app:dashboard')
+       return redirect('main_app:listing_application_view', listing_id=request.session['current_listing_id'])
     return render(request, 'main_app/read_or_update_in_general_table.html', {'form':form, 'data': general_data})
 
 @login_required
@@ -116,7 +117,7 @@ def delete_in_general_table(request, general_data_id):
     except GeneralTable.DoesNotExist:
         return redirect('main_app:dashboard')
     general_data.delete()
-    return redirect('main_app:dashboard')
+    return redirect('main_app:listing_application_view', listing_id=request.session['current_listing_id'])
 
 from .serializers import ListingDataSerializer, ListingUserGroupSerializer
 from .serializers import GeneralTableSerializer, DateTableSerializer, TimeTableSerializer, PriceTableSerializer
