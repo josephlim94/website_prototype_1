@@ -52,8 +52,16 @@
           <h3 class="masthead-brand">Cover</h3>
           <nav class="nav nav-masthead justify-content-center">
             {# Django Home Link / Admin Link / Register Link#}
+            {% if request.session.top_navbar_location == 'home' %}
             <a class="nav-link active" href="{% url 'main_app:index' %}">Home</a>
-            <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'main_app:index' %}">Home</a>
+            {% endif %}
+            {% if request.session.top_navbar_location == 'app1' %}
+            <a class="nav-link active" href="{% url 'main_app:dashboard' %}">Application 1</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'main_app:dashboard' %}">Application 1</a>
+            {% endif %}
             <a class="nav-link" href="{% url 'main_app:signup' %}">Register</a>
             {# Some logic on what to display for last item#}
             {% if user.is_authenticated %}

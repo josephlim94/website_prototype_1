@@ -10,10 +10,12 @@ from django.contrib.auth.decorators import login_required
 from .models import ListingData
 
 def index(request):
+    request.session['top_navbar_location'] = 'home'
     return render(request, 'main_app/index.html', {})
 
 @login_required
 def dashboard(request):
+    request.session['top_navbar_location'] = 'app1'
     listing_data_list = ListingData.objects.all()
     return render(request, 'main_app/dashboard.html', {'listing_data_list':listing_data_list})
 
@@ -62,6 +64,7 @@ from .models import GeneralTable, DateTable, TimeTable, PriceTable
 
 @login_required
 def listing_application_view(request, listing_id):
+    request.session['top_navbar_location'] = 'app1'
     try:
         listing_detail = ListingData.objects.get(pk=listing_id)
     except ListingData.DoesNotExist:
