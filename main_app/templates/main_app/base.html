@@ -107,12 +107,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'main_app:signup' %}">Register</a>
             </li>
-            {# Some logic on what to display for last item#}
-            {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'main_app:user_logout' %}">Logout</a>
-            {% else %}
-            <a class="nav-link" href="{% url 'main_app:user_login' %}">Login</a>
-            {% endif %}
 
           </ul>
           <!-- Links -->
@@ -136,12 +130,39 @@
             </li>
           </ul>
           <!-- Links -->
+          {# Some logic on what to display for last item#}
+          {% if user.is_authenticated %}
+          <!-- <a class="nav-item dropdown" href="{% url 'main_app:user_logout' %}">Logout</a> -->
+          <div class="nav-item dropdown">
+            <a class="nav-link btn dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-wrench"></i>
+              <span class="d-none d-xl-inline-block ml-1">{{ user.username }}</span>
+            </a>
+            <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'main_app:user_logout' %}">Log Out</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+          {% else %}
+          <a class="nav-link btn" href="{% url 'main_app:user_login' %}">Login</a>
+          {% endif %}
+          <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><i class="fas fa-wrench"></i><span class="d-none d-xl-inline-block ml-1">Tools</span></a>
+              <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li> -->
 
-          <form class="form-inline">
+          <!-- <form class="form-inline">
             <div class="md-form my-0">
               <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             </div>
-          </form>
+          </form> -->
         </div>
         <!-- Collapsible content -->
       </div>
